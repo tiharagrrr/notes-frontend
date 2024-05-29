@@ -32,13 +32,47 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     ]
                 } else return [{type: 'User', id: 'LIST'}]
             }
+        }),
+        addNewUser: builder.mutation ({
+            query: initialUserData => ({
+                url: '/users',
+                method : 'POST',
+                body : {
+                    ...initialUserData
+                }
+            }),
+            invalidatesTags : [
+                {type: 'User', id: "LIST"} //invalidates the list of users so the cache has to update the list
+            ]
+        }),
+        updateUser : builder.mutation ({
+            query: initialUserData => ({
+                url: '/users',
+                method: 'PATCH',
+                body: {
+                    ...initialUserData,
+                }
+            }),
+            invalidatesTags : (result, error, arg) => [{type: 'User', id: arg.id}]
+        }),
+        deleteUser : builder.mutation ({
+            query: ({id}) => ({
+                url: '/users',
+                method: 'DELETE',
+                body: {id}
+            }),
+            invalidatesTags : (result, error, arg) => [{type: 'User', id: arg.id}]
         })
     })
 })
 
 
 export const {
-    useGetUsersQuery
+    //rtk automatically creates hooks for us to use the query
+    useGetUsersQuery,
+    useAddNewUserMutation,
+    useUpdateUserMutation,
+    useDeleteUserMutation
 } = usersApiSlice;
 
 
