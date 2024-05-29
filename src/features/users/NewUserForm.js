@@ -42,6 +42,18 @@ const NewUserForm = () => {
         }
     }, [isSuccess, navigate] )
 
+    const onUsernameChanged = e => setUsername(e.target.value)
+    const onPasswordChanged = e => setPassword(e.target.value)
+
+    const onRolesChanged = e => {
+        const values = Array.from(
+            e.target.selectedOptions, //HTMLCollection
+            (option) => option.value
+        )
+        setRoles(values)
+    }
+
+
   return (
     <div>NewUserForm</div>
   )
