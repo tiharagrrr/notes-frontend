@@ -8,7 +8,12 @@ const NotesList = () => {
     isSuccess,
     isError,
     error
-  } = useGetNotesQuery()
+  } = useGetNotesQuery(undefined, {
+    pollingInterval: 30000,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true
+  
+  })
 
   let content
   if (isLoading) content = <p>Loading...</p>
